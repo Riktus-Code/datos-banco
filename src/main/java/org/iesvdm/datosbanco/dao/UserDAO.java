@@ -18,4 +18,6 @@ public interface UserDAO {
 
     void update(User user) throws SQLException;
 
+    User getById(Long id);
+
 }

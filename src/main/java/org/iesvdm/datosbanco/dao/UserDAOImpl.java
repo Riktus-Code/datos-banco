@@ -5,10 +5,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO{
@@ -66,6 +64,8 @@ public class UserDAOImpl implements UserDAO{
             where id = ?
 """,id);
 
+
+
     }
 
     @Override
@@ -98,5 +98,22 @@ public class UserDAOImpl implements UserDAO{
                 user.getFecha_nac(),
                 user.getId()
         );
+    }
+
+    @Override
+    public User getById(Long id) {
+        String sql = """
+                select * from user where id=?
+                """;
+        User user = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> User.builder()
+                .id(rs.getLong("id"))
+                .nombre(rs.getString("nombre"))
+                .direccion(rs.getString("direccion"))
+                .telefono(rs.getString("telefono"))
+                .fecha_nac(rs.getString("fecha_nac"))
+                .build()
+        ,id);
+
+        return user;
     }
 }

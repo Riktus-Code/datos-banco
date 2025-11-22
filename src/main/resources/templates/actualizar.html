@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Actualizar</h1>
+<form method="post" th:action="@{/incio/actualizar}" th:object="${userAlActualizador}">
+    <input th:field="*{nombre}" type="text" placeholder="Nombre">
+    <input th:field="*{direccion}" type="text" placeholder="Direccion">
+    <input th:field="*{telefono}" type="text" placeholder="Telefono">
+    <input th:field="*{fecha_nac}" type="text" placeholder="Fecha Nacimiento">
+    <button type="submit">Actualizar</button>
+</form>
+    <a th:href="@{/incio}">Volver</a>
+</body>
+</html>

@@ -12,6 +12,8 @@
             <td>Direccion</td>
             <td>Teléfono</td>
             <td>Fecha Nacimiento</td>
+            <td></td>
+            <td></td>
         </th>
         <tbody>
         <tr th:each="u: ${users}">
@@ -20,8 +22,18 @@
             <td th:text="${u.direccion}"></td>
             <td th:text="${u.telefono}"></td>
             <td th:text="${u.fecha_nac}"></td>
+            <td><a th:href="@{'/inicio/actualizar/' + ${u.id}}">Actualizar</a></td>
+            <td><a th:href="@{'/inicio/eliminar/' + ${u.id}}">Eliminar</a></td>
         </tr>
         </tbody>
+
+        <form method="post" th:action="@{/inicio}" th:object="${user}">
+            <input th:field="*{nombre}" type="text" placeholder="Nombre">
+            <input th:field="*{direccion}" type="text" placeholder="Direccion">
+            <input th:field="*{telefono}" type="text" placeholder="Telefono">
+            <input th:field="*{fecha_nac}" type="text" placeholder="Fecha Nacimiento">
+            <button type="submit">Añadir</button>
+        </form>
 
     </table>
 </body>
