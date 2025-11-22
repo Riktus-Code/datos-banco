@@ -4,11 +4,12 @@ import org.iesvdm.datosbanco.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-
+@Repository
 public class UserDAOImpl implements UserDAO{
 
 
@@ -43,7 +44,7 @@ public class UserDAOImpl implements UserDAO{
     public User findByUserName(String nombre) {
 
         String sql = """
-                select * from user where nombre = ?;
+                select * from `user` where nombre = ?;
                 """;
 
         User user = jdbcTemplate.queryForObject(sql,  (rs, rowNum) -> User.builder()

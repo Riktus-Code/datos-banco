@@ -34,6 +34,11 @@
             <input th:field="*{fecha_nac}" type="text" placeholder="Fecha Nacimiento">
             <button type="submit">Añadir</button>
         </form>
+        <form method="post" th:action="@{/inicio/buscar}" th:object="${user}">
+            <input th:field="*{nombre}" th:type="text">
+            <a th:href="@{/inicio/buscar}"><button>Buscar</button></a>
+        </form>
+
 
     </table>
 </body>

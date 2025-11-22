@@ -1,11 +1,11 @@
 package org.iesvdm.datosbanco.dao;
 
 import org.iesvdm.datosbanco.model.User;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
-@Repository
+@Component
 public interface UserDAO {
 
     User create(User user) throws SQLException;

@@ -14,17 +14,14 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.util.List;
 
-
+@Slf4j
 @RequestMapping("/inicio")
 @Controller
 public class UserController {
 
-    private final UserDAO userDAO;
-    private final HashUtil hashUtil;
-    public UserController(UserDAO userDAO, HashUtil hashUtil) {
-        this.userDAO = userDAO;
-        this.hashUtil = hashUtil;
-    }
+    @Autowired
+    private UserDAO userDAO;
+
 
     @GetMapping("")
     public String ini(Model  model) {
@@ -38,9 +35,9 @@ public class UserController {
     }
 
     @PostMapping("")
-    public String post(Model  model, @ModelAttribute UserDAO userDAO, @RequestParam Long idUser, @RequestParam String userName, @RequestParam String direccion, @RequestParam String telefono, @RequestParam String fecha_nac) throws SQLException {
+    public String post(Model  model,  @RequestParam String nombre, @RequestParam String direccion, @RequestParam String telefono, @RequestParam String fecha_nac) throws SQLException {
         List<User> users = userDAO.getAll();
-        User user = User.builder().nombre(userName).direccion(direccion).telefono(telefono).fecha_nac(fecha_nac).build() ;
+        User user = User.builder().nombre(nombre).direccion(direccion).telefono(telefono).fecha_nac(fecha_nac).build() ;
         User nuevoUser = userDAO.create(user);
 
 
@@ -48,13 +45,13 @@ public class UserController {
 
 
 
-
+        model.addAttribute("user", new User());
         model.addAttribute("users", users);
         return "inicio";
     }
 
     //actualizar
-    @GetMapping("/actualizar/{id}")
+    @GetMapping("/actualizar/{idUser}")
     public String actualizar(Model  model, @PathVariable Long idUser) {
         User user = userDAO.getById(idUser);
         model.addAttribute("userAlActualizador", user);
@@ -75,14 +72,14 @@ public class UserController {
     }
 
     @PostMapping("/buscar")
-    public String postBuscar(Model  model, @ModelAttribute UserDAO userDAO, @RequestParam String userName) {
-        User find = userDAO.findByUserName(userName);
+    public String postBuscar(Model  model,  @ModelAttribute User user) throws SQLException {
+        User find = userDAO.findByUserName(user.getNombre());
         model.addAttribute("user", find);
         return "buscar";
     }
     //eliminar
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(Model  model, @PathVariable Long idUser) throws SQLException {
+    @GetMapping("/eliminar/{idUser}")
+    public String eliminar( @PathVariable Long idUser) throws SQLException {
         userDAO.delete(idUser);
         return "redirect:/inicio";
     }
